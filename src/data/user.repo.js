@@ -10,7 +10,7 @@ const UserRepo = () => {
             // return await provider.query("SELECT * FROM users");
 
             // con PostgresProvider providers
-            let users = await provider.query("SELECT * FROM users");
+            let users = await provider.query("SELECT * FROM facturas");
             return users.rows;
         } catch (err) {
             console.error(err)
