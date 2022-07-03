@@ -7,9 +7,17 @@ const { invoiceService } = require('../services');
 // to insert on db new invoice
 router.post('/', async function (req, res) {
     try {
-        let body = req.body;
-        let data = await invoiceService.create(body);
-        return res.json(data);
+        let data = await invoiceService.create(req.body);
+
+        if (!data) {
+            return res.status(400).json("Error al insertar registro.");
+        }
+
+        if (data.error) {
+            return res.status(400).json(data.message);
+        }
+
+        return res.status(200).json(data);
     } catch (err) {
         return res.status(500).json(err);
     }
@@ -19,9 +27,17 @@ router.post('/', async function (req, res) {
 // to query the selected invoice in db
 router.get('/', async function (req, res) {
     try {
-        let body = req.body;
-        let data = await invoiceService.find(body);
-        return res.json(data);
+        let data = await invoiceService.find(req.body);
+
+        if (!data) {
+            return res.status(400).json("Error al consultar registro.");
+        }
+
+        if (data.error) {
+            return res.status(400).json(data.message);
+        }
+
+        return res.status(200).json(data);
     } catch (err) {
         return res.status(500).json(err);
     }
@@ -32,7 +48,15 @@ router.get('/', async function (req, res) {
 router.put('/nullify/:id', async function (req, res) {
     try {
         let data = await invoiceService.nullify(req.params);
-        return res.json(data);
+        if (!data) {
+            return res.status(400).json("Error al anular registro.");
+        }
+
+        if (data.error) {
+            return res.status(400).json(data.message);
+        }
+
+        return res.status(201).json(data);
     } catch (err) {
         return res.status(500).json(err);
     }
@@ -41,6 +65,22 @@ router.put('/nullify/:id', async function (req, res) {
 // READ
 // to return the invoice's pdf
 router.get('/pdf/', function (req, res) {
-    return res.send("Visualizar factura");
+    try {
+        let data = await invoiceService.find(req.body);
+
+        if (!data) {
+            return res.status(400).json("Error al consultar registro.");
+        }
+
+        if (data.error) {
+            return res.status(400).json(data.message);
+        }
+
+        return res.status(200).json(data);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
 });
+
+
 module.exports = router;
