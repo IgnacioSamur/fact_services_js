@@ -64,7 +64,7 @@ router.put('/nullify/:id', async function (req, res) {
 
 // READ
 // to return the invoice's pdf
-router.get('/pdf/', function (req, res) {
+router.get('/pdf/', async function (req, res) {
     try {
         let data = await invoiceService.find(req.body);
 
