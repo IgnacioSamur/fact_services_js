@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS invoices(
     invoice_price INT NOT NULL,
     shipment_taxes INT,
     import_taxes INT,
+    nullify BOOLEAN DEFAULT false,
     PRIMARY KEY (invoice_id)
 );
 

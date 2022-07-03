@@ -1,3 +1,3 @@
 module.exports = {
-    InvoiceRepo: require("./invoice.repo")
+    invoiceRepo: require("./invoice.repo")
 };

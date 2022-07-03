@@ -1,3 +1,3 @@
 module.exports = {
-    InvoiceService: require("./invoice.service")
+    invoiceService: require('./invoice.service')
 };
