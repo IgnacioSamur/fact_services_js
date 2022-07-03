@@ -1,3 +1,3 @@
 module.exports = {
-    userRepo: require("./user.repo"),
+    InvoiceRepo: require("./invoice.repo")
 };
