@@ -2,6 +2,7 @@
 
 const mysql = require('mysql');
 const provider = require('./providers/postgres_provider');
+const uuid = require('uuid');
 const { pdfResource } = require('../resources');
 
 const InvoiceRepo = () => {
@@ -22,9 +23,12 @@ const InvoiceRepo = () => {
                     });
                 });
                 const itemResult = await provider.query(itemQuery);
+                let filePath = "http://127.0.0.1:5000/invoices/factura_" + invoiceId + ".pdf";
+                const fileQuery = mysql.format("INSERT INTO invoices_files(invoice_id, file_uuid, file_path) VALUES (?,?,?)", [invoiceId,uuid.v1(),filePath]);
+                const fileResult = await provider.query(fileQuery);
                 const document = await pdfResource.create({ invoiceId, date_of_sale, date_of_invoice, buyer_name, buyer_id, buyer_mail, buyer_address, buyer_city, buyer_phone_number, buyer_turnover, payment_condition, delivery_condition, seller_name, seller_mail, invoice_price, shipment_taxes, import_taxes, items });
 
-                return itemResult.rowCount > 0 && document ? "invoice added" : null;
+                return itemResult.rowCount > 0 && document && fileResult ? "invoice added" : null;
             } else {
                 return null;
             }
@@ -62,9 +66,9 @@ const InvoiceRepo = () => {
         }
     }
 
-    const nullifyInvoice = async ({ id }) => {
+    const nullifyInvoice = async ( id ) => {
         try {
-            let query = mysql.format("UPDATE invoices SET nullify=true WHERE invoice_id=?", [id]);
+            let query = mysql.format("UPDATE invoices SET nullify=true WHERE invoice_id=?", id);
             const result = await provider.query(query);
             return "facura anulada";
         } catch (err) {
@@ -73,11 +77,14 @@ const InvoiceRepo = () => {
         }
     }
 
-    const invoicePdf = ({ id }) => {
-        let pathName = "http://127.0.0.1:5000/invoices/" + [id] + ".pdf";
-        return {
-            "invoice_id": id,
-            "location": pathName
+    const invoicePdf = async ( uuid ) => {
+        try {
+            let query =  mysql.format('SELECT file_path FROM invoices_files WHERE file_uuid=?', uuid);
+            const result = await provider.query(query);
+            return result.rowCount > 0 ? result.rows : null;
+        } catch (err) {
+            console.error(err);
+            Promise.reject(err);
         }
     }
 

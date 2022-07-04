@@ -29,3 +29,12 @@ CREATE TABLE IF NOT EXISTS items(
     FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (item_id, invoice_id)
 );
+
+CREATE TABLE IF NOT EXISTS invoices_files(
+	id_file SERIAL,
+	invoice_id INT NOT NULL,
+	file_uuid UUID NOT NULL,
+	file_path VARCHAR(128) NOT NULL,
+	FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (id_file, invoice_id)
+);

@@ -7,7 +7,7 @@ const PdfResource = () => {
     const createPdf = ({ invoiceId, date_of_sale, date_of_invoice, buyer_name, buyer_id, buyer_mail, buyer_address, buyer_city, buyer_phone_number, buyer_turnover, payment_condition, delivery_condition, seller_name, seller_mail, invoice_price, shipment_taxes, import_taxes, items }) => {
         try {
             let doc = new PDFDocument({margin: 30, size: 'A4'});
-            let documentPathName = "./invoices/" + invoiceId + ".pdf";
+            let documentPathName = "./invoices/" + "factura_" + invoiceId + ".pdf";
             doc.pipe(fs.createWriteStream(documentPathName));
 
             const itemsArray = [];
