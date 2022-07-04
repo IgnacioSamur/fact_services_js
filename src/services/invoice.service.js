@@ -103,9 +103,12 @@ const InvoiceService = () => {
         }
     }
 
-    const invoicePdf = () => {
-        let data = {}
-        return data;
+    const invoicePdf = async (id) => {
+        try {
+            return await invoiceRepo.pdf(id);
+        } catch (error) {
+            return Promise.reject({ error: true, message: error });
+        }
     }
 
     return {

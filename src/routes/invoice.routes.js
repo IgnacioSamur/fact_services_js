@@ -64,9 +64,9 @@ router.put('/nullify/:id', async function (req, res) {
 
 // READ
 // to return the invoice's pdf
-router.get('/pdf/', async function (req, res) {
+router.get('/pdf/:id', async function (req, res) {
     try {
-        let data = await invoiceService.find(req.body);
+        let data = await invoiceService.pdf(req.params);
 
         if (!data) {
             return res.status(400).json("Error al consultar registro.");
@@ -81,6 +81,5 @@ router.get('/pdf/', async function (req, res) {
         return res.status(500).json(err);
     }
 });
-
 
 module.exports = router;
