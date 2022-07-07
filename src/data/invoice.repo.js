@@ -28,7 +28,8 @@ const InvoiceRepo = () => {
                 const fileResult = await provider.query(fileQuery);
                 const document = await pdfResource.create({ invoiceId, date_of_sale, date_of_invoice, buyer_name, buyer_id, buyer_mail, buyer_address, buyer_city, buyer_phone_number, buyer_turnover, payment_condition, delivery_condition, seller_name, seller_mail, invoice_price, shipment_taxes, import_taxes, items });
 
-                return itemResult.rowCount > 0 && document && fileResult ? "invoice added" : null;
+                let salida = [itemResult, document, fileResult];
+                return salida;
             } else {
                 return null;
             }
@@ -70,7 +71,7 @@ const InvoiceRepo = () => {
         try {
             let query = mysql.format("UPDATE invoices SET nullify=true WHERE invoice_id=?", id);
             const result = await provider.query(query);
-            return "facura anulada";
+            return result;
         } catch (err) {
             console.error(err);
             Promise.reject(err);
