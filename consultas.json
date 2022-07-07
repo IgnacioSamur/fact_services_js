@@ -1,0 +1,39 @@
+//crear factura y generar PDF --------METODO POST
+{
+    "date_of_sale": "2022-07-03",
+    "date_of_invoice": "2022-07-04",
+    "buyer_name": "Ignacio",
+    "buyer_id": "19.535.876-1",
+    "buyer_mail": "ignacio@gmail.com",
+    "buyer_address": "Calle Uno #12",
+    "buyer_city": "Osorno",
+    "buyer_phone_number": "995264512",
+    "buyer_turnover": "Particular",
+    "payment_condition": "Efectivo",
+    "delivery_condition": "Entrega inmediata",
+    "seller_name": "Leonardo",
+    "seller_mail": "leonardo@empresa.cl",
+    "invoice_price": "6270",
+    "shipment_taxes": "0",
+    "import_taxes": "0",
+    "items": [
+        {
+            "item_name": "Cable UTP Cat5e + Conector RJ45 - 2.1mts Rojo Inyectado",
+            "item_price": "2090",
+            "item_count": "3"
+        }
+    ]
+}
+
+//consultar datos en json ---------- METODO GET
+{
+    "id": 3,
+    "date_of_sale": null,
+    "date_of_invoice": null
+}
+
+//anular factura ------------- METODO PUT
+//http://127.0.0.1:5000/invoice/nullify/{id}
+
+//consultar link de descarga de factura mediante UUID ---------- METODO GET
+//http://127.0.0.1:5000/invoice/pdf/{uuid} 

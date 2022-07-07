@@ -10,14 +10,14 @@ router.post('/', async function (req, res) {
         let data = await invoiceService.create(req.body);
 
         if (!data) {
-            return res.status(400).json("Error al insertar registro.");
+            return res.status(400).json();
         }
 
         if (data.error) {
             return res.status(400).json(data.message);
         }
 
-        return res.status(200).json(data);
+        return res.status(200).json("Factura registrada");
     } catch (err) {
         return res.status(500).json(err);
     }
@@ -56,7 +56,7 @@ router.put('/nullify/:id', async function (req, res) {
             return res.status(400).json(data.message);
         }
 
-        return res.status(201).json(data);
+        return res.status(201).json("Registro anulado");
     } catch (err) {
         return res.status(500).json(err);
     }
